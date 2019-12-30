@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Imagine</string>
+    <string name="diferencia">Hoy podemos hacer la diferencia</string>
+    <string name="Acceder">Acceder</string>
+    <string name="Email">Email</string>
+    <string name="Contrasena">Contraseña</string>
+    <string name="Registrarse">Registrarse</string>
+    <string name="ContraOlvidada">Ha olvidado su contraseña</string>
+
+    <string name="Nombre">Nombre Completo</string>
+    <string name="NombreOrganizacion">Nombre Organización</string>
+    <string name="RepetirContrasena">Repetir Contraseña</string>
+    <string name="Telefono">Teléfono</string>
+    <string name="Atras">Volver</string>
+    <string name="FechaNacimiento">Edad</string>
+    <string name="recuperarContra">Recuperar Contraseña</string>
+    <string name="ingreseEmail">Ingrese su email de recuperación</string>
+
+
+</resources>

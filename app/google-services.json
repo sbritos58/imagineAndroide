@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "334463099",
+    "firebase_url": "https://imagine-aa604.firebaseio.com",
+    "project_id": "imagine-aa604",
+    "storage_bucket": "imagine-aa604.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334463099:android:3eb19f9e9b9c091e6a22de",
+        "android_client_info": {
+          "package_name": "com.santi.imagine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "334463099-g2jpb88bcan0j7363hcmj52oebnf39o8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.santi.imagine",
+            "certificate_hash": "1235fd5958d74c866bb6dfde910ad28b52ef257c"
+          }
+        },
+        {
+          "client_id": "334463099-aaj3nb5jl4rd40meehb6ukpcv9pjr7pa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoWxvVQkdrbLgLNH_qEH0vPUT2jDP7K6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "334463099-aaj3nb5jl4rd40meehb6ukpcv9pjr7pa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
