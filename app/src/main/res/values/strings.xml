@@ -24,7 +24,7 @@
     <string name="ProductoCantidad">Cantidad</string>
     <string name="ProductoPais">País</string>
     <string name="ProductoCiudad">Ciudad</string>
-    <string name="ProductoFoto">Subir imagen</string>
+    <string name="ProductoFoto">Subir imagen o sacar foto</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
