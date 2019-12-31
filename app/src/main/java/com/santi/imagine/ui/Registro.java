@@ -63,6 +63,7 @@ public class Registro extends AppCompatActivity {
         pb = (ProgressBar)findViewById(R.id.pb);
         sv = (ScrollView)findViewById(R.id.sv);
 
+
         db = FirebaseFirestore.getInstance();
         registroFormVisibility(true);
 
@@ -138,7 +139,7 @@ public class Registro extends AppCompatActivity {
                     updateUI(user);
 
                 }else{
-                    Toast.makeText(Registro.this, "Error en el registro", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Registro.this, "Email ya registrado", Toast.LENGTH_SHORT).show();
                     updateUI(null);
                 }
             }

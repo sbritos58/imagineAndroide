@@ -109,7 +109,7 @@
                 android:layout_marginTop="5sp"
 
                 android:ems="10"
-                android:hint="@string/Contrasena"
+                android:hint="@string/Contrasena2"
                 android:inputType="textPassword"
                 android:singleLine="true"
                 android:textAlignment="center"

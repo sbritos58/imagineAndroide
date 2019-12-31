@@ -4,6 +4,7 @@
     <string name="Acceder">Acceder</string>
     <string name="Email">Email</string>
     <string name="Contrasena">Contraseña</string>
+    <string name="Contrasena2">Contraseña (Min. 6 caracteres.)</string>
     <string name="Registrarse">Registrarse</string>
     <string name="ContraOlvidada">Ha olvidado su contraseña</string>
 
@@ -15,6 +16,19 @@
     <string name="FechaNacimiento">Edad</string>
     <string name="recuperarContra">Recuperar Contraseña</string>
     <string name="ingreseEmail">Ingrese su email de recuperación</string>
+
+    <string name="Donador">Donar</string>
+    <string name="VerDonaciones">Ver donaciones</string>
+
+    <string name="ProductoDonar">Producto a donar</string>
+    <string name="ProductoCantidad">Cantidad</string>
+    <string name="ProductoPais">País</string>
+    <string name="ProductoCiudad">Ciudad</string>
+    <string name="ProductoFoto">Subir imagen</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

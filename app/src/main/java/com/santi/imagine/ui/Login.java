@@ -177,7 +177,7 @@ public class Login extends AppCompatActivity {
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
 
-        if(email.matches(emailPattern) && email.length() < 0){
+        if(email.matches(emailPattern) && email.length() > 0){
         firebaseAuth.signInWithEmailAndPassword(email,contra).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
