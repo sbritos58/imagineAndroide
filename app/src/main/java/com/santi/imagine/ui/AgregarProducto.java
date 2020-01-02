@@ -1,19 +1,32 @@
 package com.santi.imagine.ui;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.common.primitives.Chars;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,6 +35,11 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.santi.imagine.R;
 import com.santi.imagine.models.Productos;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class AgregarProducto extends AppCompatActivity {
@@ -35,6 +53,11 @@ public class AgregarProducto extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firestore;
     String urlFotos,tokenUsuario;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private ProgressDialog mprogress;
+
+
+
 
 
     @Override
@@ -48,6 +71,8 @@ public class AgregarProducto extends AppCompatActivity {
         etCantidad = (EditText)findViewById(R.id.etCantidad);
         etPais = (EditText)findViewById(R.id.etPais);
         etCiudad = (EditText)findViewById(R.id.etCiudad);
+
+        mprogress = new ProgressDialog(this);
 
         firestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -122,15 +147,47 @@ public class AgregarProducto extends AppCompatActivity {
         btnFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
-                startActivityForResult(intent,GALLERY_INTENT);
+
+                Animation animation = AnimationUtils.loadAnimation(AgregarProducto.this,R.anim.bounce);
+                btnFoto.startAnimation(animation);
+
+
+
+                final CharSequence[] opciones = {"Tomar foto","Cargar imagen","Cancelar"};
+
+                final AlertDialog.Builder alertOpciones = new AlertDialog.Builder(AgregarProducto.this);
+                alertOpciones.setTitle("Seleccione una opción");
+
+                alertOpciones.setItems(opciones, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (opciones[i].equals("Tomar foto")){
+                            tomarFotografia();
+                            //TODO ACA VA LA APERTURA DE LA CAMARA
+                        }else{
+                            if(opciones[i].equals("Cargar imagen")){
+                                Intent intent = new Intent(Intent.ACTION_PICK);
+                                intent.setType("image/*");
+                                startActivityForResult(intent,GALLERY_INTENT);
+                            }else{
+                                dialogInterface.dismiss();
+                            }
+                        }
+                    }
+                });alertOpciones.show();
+
+
+
 
             }
         });
 
 
     }
+
+    private void tomarFotografia() {
+            //TODO ACA VA LA APERTURA DE LA CAMARA SUBIR FOTOS ETC.
+        }
 
 
 
@@ -139,33 +196,40 @@ public class AgregarProducto extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == GALLERY_INTENT && resultCode == RESULT_OK){
+        if(resultCode == RESULT_OK && requestCode == GALLERY_INTENT){
+
+                    mprogress.setMessage("Subiendo Imagen...");
+                    mprogress.show();
 
 
-            Uri uri = data.getData();
+                    Uri uri = data.getData();
 
 
-            final StorageReference filepath = storageReference.child("Fotos").child(uri.getLastPathSegment());
+                    final StorageReference filepath = storageReference.child("Fotos").child(uri.getLastPathSegment());
 
-            filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                    filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
-                        public void onSuccess(Uri uri) {
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                            Uri downloadUrl = uri;
-                            urlFotos = uri.toString();
+                            filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
 
-                            Toast.makeText(AgregarProducto.this, "Imagen recibida satisfactoriamente", Toast.LENGTH_SHORT).show();
+
+                                    Uri downloadUrl = uri;
+                                    urlFotos = uri.toString();
+                                    mprogress.dismiss();
+
+                                    Toast.makeText(AgregarProducto.this, "Imagen recibida satisfactoriamente", Toast.LENGTH_SHORT).show();
+                                }
+
+                            });
+
                         }
-
                     });
 
-                }
-            });
-
-        }
+            }
     }
 }
+
+
