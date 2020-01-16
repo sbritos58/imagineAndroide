@@ -8,6 +8,7 @@
     android:background="@color/colorPrimary">
 
     <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -18,7 +19,7 @@
 
             <EditText
                 android:id="@+id/etProducto"
-
+                android:textColorHint="@color/secondatyText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20sp"
@@ -31,8 +32,26 @@
                 android:textStyle="italic" />
 
             <EditText
-                android:id="@+id/etCantidad"
+                android:id="@+id/etDescripcion"
+                android:textColorHint="@color/secondatyText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:ems="10"
+                android:hint="@string/Descripcion"
+                android:inputType="textMultiLine"
+                android:scrollHorizontally="false"
+                android:lines="3"
+                android:maxLines="6"
+                android:minLines="1"
+                android:singleLine="false"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="italic" />
 
+            <EditText
+                android:id="@+id/etCantidad"
+                android:textColorHint="@color/secondatyText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20sp"
@@ -46,7 +65,7 @@
 
             <EditText
                 android:id="@+id/etPais"
-
+                android:textColorHint="@color/secondatyText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20sp"
@@ -60,7 +79,7 @@
 
             <EditText
                 android:id="@+id/etCiudad"
-
+                android:textColorHint="@color/secondatyText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20sp"
@@ -76,21 +95,33 @@
                 android:id="@+id/btnFoto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/Imagine_background"
+                android:background="@color/accentColor"
                 android:text="@string/ProductoFoto"
-                android:textColor="@android:color/background_light"
-                android:textSize="18sp" />
+                android:textColor="@color/textIcons"
+                android:textSize="18sp"/>
 
             <Button
                 android:id="@+id/btnDonar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16px"
-                android:background="@color/Imagine_background"
+                android:background="@color/accentColor"
                 android:text="@string/Donador"
-                android:textColor="@android:color/background_light"
+                android:textColor="@color/textIcons"
                 android:textSize="18sp" />
+
         </LinearLayout>
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/scrollView3"
+        android:backgroundTint="@color/textIcons"
+        app:layout_constraintTop_toTopOf="@+id/scrollView3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,16 @@ package com.santi.imagine.models;
 
 public class Productos {
     private String producto;
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    private String descripcion;
     private String cantidad;
     private String pais;
     private String ciudad;
@@ -20,7 +30,8 @@ public class Productos {
     public Productos() {
     }
 
-    public Productos(String producto, String cantidad, String pais, String ciudad, String url, String tokenUsuario) {
+    public Productos(String producto,String descripcion, String cantidad, String pais, String ciudad, String url, String tokenUsuario) {
+        this.descripcion = descripcion;
         this.producto = producto;
         this.cantidad = cantidad;
         this.pais = pais;

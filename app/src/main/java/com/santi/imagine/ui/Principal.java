@@ -1,20 +1,21 @@
 package com.santi.imagine.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.santi.imagine.R;
 
 public class Principal extends AppCompatActivity {
 
-    private Button btnDonador, btnVerDon;
+    private Button btnDonador, btnVerDon,cerrarSesion;
+    private FirebaseAuth firebaseAuth;
 
 
     @Override
@@ -24,10 +25,22 @@ public class Principal extends AppCompatActivity {
 
 
 
+        firebaseAuth = FirebaseAuth.getInstance();
 
 
         btnDonador = (Button)findViewById(R.id.btnDonador);
+        cerrarSesion = (Button)findViewById(R.id.cerrarSesion);
         btnVerDon = (Button)findViewById(R.id.btnVerDon);
+
+
+        cerrarSesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                firebaseAuth.signOut();
+                Intent i = new Intent(Principal.this,Login.class);
+                startActivity(i);
+            }
+        });
 
         btnDonador.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +62,7 @@ public class Principal extends AppCompatActivity {
 
                 btnVerDon.startAnimation(animation);
 
-                Intent i = new Intent(Principal.this,Login.class);
+                Intent i = new Intent(Principal.this,MainActivity.class);
                 startActivity(i);
                 finish();
 

@@ -26,9 +26,9 @@
                 android:id="@+id/btnDonador"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/Imagine_background"
+                android:background="@color/accentColor"
                 android:text="@string/Donador"
-                android:textColor="@android:color/background_light"
+                android:textColor="@color/textIcons"
                 android:textSize="18sp" />
 
             <Button
@@ -36,9 +36,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16px"
-                android:background="@color/Imagine_background"
+                android:background="@color/accentColor"
                 android:text="@string/VerDonaciones"
-                android:textColor="@android:color/background_light"
+                android:textColor="@color/textIcons"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/cerrarSesion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16px"
+                android:background="@color/accentColor"
+                android:text="Cerrar Sesión"
+                android:textColor="@color/textIcons"
                 android:textSize="18sp" />
 
         </LinearLayout>

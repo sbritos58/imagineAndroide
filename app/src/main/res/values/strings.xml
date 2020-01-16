@@ -25,6 +25,7 @@
     <string name="ProductoPais">País</string>
     <string name="ProductoCiudad">Ciudad</string>
     <string name="ProductoFoto">Subir imagen o sacar foto</string>
+    <string name="Descripcion">Descripción</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

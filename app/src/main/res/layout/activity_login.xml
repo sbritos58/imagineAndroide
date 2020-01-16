@@ -10,6 +10,7 @@
     <ProgressBar
         android:id="@+id/pb"
         style="?android:attr/progressBarStyle"
+        android:backgroundTint="@color/textIcons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,6 +38,7 @@
             <EditText
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
+                android:textColorHint="@color/secondatyText"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/Email"
@@ -50,6 +52,7 @@
                 android:id="@+id/etContrasena"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColorHint="@color/secondatyText"
                 android:ems="10"
                 android:hint="@string/Contrasena"
                 android:inputType="textPassword"
@@ -61,9 +64,10 @@
                 android:id="@+id/BtnAcceder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/Imagine_background"
+
+                android:background="@color/accentColor"
                 android:text="@string/Acceder"
-                android:textColor="@android:color/background_light"
+                android:textColor="@color/textIcons"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -73,9 +77,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:background="@color/Imagine_background"
+                android:background="@color/accentColor"
                 android:text="@string/Registrarse"
-                android:textColor="@android:color/background_light"
+                android:textColor="@color/textIcons"
                 android:textSize="18sp" />
 
             <TextView

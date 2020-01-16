@@ -1,8 +1,5 @@
 package com.santi.imagine.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,7 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -167,11 +166,11 @@ public class Login extends AppCompatActivity {
 
     }
 
-    private void loginFormVisibility(boolean showForm) {
-            pb.setVisibility(showForm ? View.GONE : View.VISIBLE);
-            sv.setVisibility(showForm ? View.VISIBLE : View.GONE);
+        private void loginFormVisibility(boolean showForm) {
+                pb.setVisibility(showForm ? View.GONE : View.VISIBLE);
+                sv.setVisibility(showForm ? View.VISIBLE : View.GONE);
 
-    }
+        }
 
     private void loginUsuario() {
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -203,19 +202,28 @@ public class Login extends AppCompatActivity {
             //Almacenar la informacion del usuario en firestore y navegar hacia el siguiente pantallaso
             new Handler().postDelayed(new Runnable(){
                 public void run(){
+                    loginFormVisibility(true);
                     // Cuando pasen los 3 segundos, pasamos a la actividad principal de la aplicación
                     Intent intent = new Intent(Login.this,Principal.class);
                     startActivity(intent);
                     finish();
                 }
-            }, 500);
+            }, 10);
         }else{
             if(trylogin){
-                loginFormVisibility(true);
-                etContrasena.setError("Email y/o contraseña incorrectos");
-                etEmail.setText("");
-                etContrasena.setText("");
-                etEmail.requestFocus();
+
+
+                new Handler().postDelayed(new Runnable(){
+                    public void run(){
+
+                        loginFormVisibility(true);
+                        etContrasena.setError("Email y/o contraseña incorrectos");
+                        etEmail.setText("");
+                        etContrasena.setText("");
+                        etEmail.requestFocus();
+
+                    }
+                }, 200);
 
                 }
             }
@@ -226,5 +234,12 @@ public class Login extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         updateUI(currentUser);
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

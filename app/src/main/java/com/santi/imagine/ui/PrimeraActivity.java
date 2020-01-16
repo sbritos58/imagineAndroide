@@ -1,7 +1,5 @@
 package com.santi.imagine.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.Animation;
@@ -9,9 +7,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.santi.imagine.R;
 
-public class MainActivity extends AppCompatActivity {
+public class PrimeraActivity extends AppCompatActivity {
     private ImageView tv;
     TextView textView;
 
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.primera_activity);
         textView= (TextView)findViewById(R.id.TextView);
 
         Animation anim = AnimationUtils.loadAnimation(this,R.anim.downtoup);
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         Thread timer = new Thread(){
             public void run() {
                 try {
-                    sleep(2000);
+                    sleep(5000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
