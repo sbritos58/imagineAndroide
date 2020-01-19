@@ -51,31 +51,28 @@
 
             <EditText
                 android:id="@+id/etCantidad"
-                android:textColorHint="@color/secondatyText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20sp"
+                android:digits="0123456789"
                 android:ems="10"
                 android:hint="@string/ProductoCantidad"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:singleLine="true"
                 android:textAlignment="center"
+                android:textColorHint="@color/secondatyText"
                 android:textSize="20sp"
                 android:textStyle="italic" />
 
-            <EditText
-                android:id="@+id/etPais"
-                android:textColorHint="@color/secondatyText"
+            <Spinner
+                android:id="@+id/spinner"
+                android:background="@color/colorPrimaryDark"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20sp"
-                android:ems="10"
-                android:hint="@string/ProductoPais"
-                android:inputType="textPersonName"
-                android:singleLine="true"
+                android:popupBackground="@color/colorPrimaryDark"
                 android:textAlignment="center"
-                android:textSize="20sp"
-                android:textStyle="italic" />
+                android:textSize="20dp"
+                android:layout_height="50dp"
+                android:entries="@array/Paises"/>
 
             <EditText
                 android:id="@+id/etCiudad"
@@ -109,6 +106,8 @@
                 android:text="@string/Donador"
                 android:textColor="@color/textIcons"
                 android:textSize="18sp" />
+
+
 
         </LinearLayout>
     </ScrollView>

@@ -1,12 +1,14 @@
 package com.santi.imagine.ui;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +34,7 @@ public class SolicitudProductos extends AppCompatActivity {
     Usuarios usuarioagra;
     ImageView im;
     String producto,tokenUsuario1;
+    ProgressBar pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,17 +57,9 @@ public class SolicitudProductos extends AppCompatActivity {
         tv3 = (TextView)findViewById(R.id.tv3);
         tv4 = (TextView)findViewById(R.id.tv4);
         tv5 = (TextView)findViewById(R.id.tv5);
+        pb = (ProgressBar) findViewById(R.id.pb);
 
-        button = (Button)findViewById(R.id.button);
-
-
-
-
-
-
-
-
-
+        progressbar(false);
 
         FirebaseUser datos_usuario = firebaseAuth.getCurrentUser();
 
@@ -91,19 +86,37 @@ public class SolicitudProductos extends AppCompatActivity {
                 tv4.setText(producto);
                 tv5.setText(cantidad + "unidades");
                 Picasso.get().load(imagen).into(im);
+
+
+                final Intent email = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"));
+                email.putExtra(Intent.EXTRA_EMAIL,new String[]{usuario.getEmail()});
+                email.putExtra(Intent.EXTRA_TEXT,"Contacte a su donador");
+                email.setType("message/rfc822");
+
+
+                Thread timer = new Thread(){
+                    public void run() {
+                        try {
+                            sleep(2500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } finally {
+                            startActivity(Intent.createChooser(email,"Elige un cliente de email"));
+                            finish();
+
+                        }
+                    }
+                };
+                timer.start();
+
+
+
             }
         });
 
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SolicitudProductos.this, Principal.class);
-                startActivity(intent);
-            }
-        });
 
-    }
+            }
 
     @Override
     protected void onStart() {
@@ -119,7 +132,23 @@ public class SolicitudProductos extends AppCompatActivity {
                     }
                 });
 
+        Thread timer = new Thread(){
+            public void run() {
+                try {
+                    sleep(2600);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    startActivity(new Intent(SolicitudProductos.this,Principal.class));
+
+
+                }
+            }
+        };
+        timer.start();
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -128,5 +157,7 @@ public class SolicitudProductos extends AppCompatActivity {
         startActivity(i);
     }
 
-
+    private void progressbar(boolean showForm) {
+        pb.setVisibility(showForm ? View.GONE : View.VISIBLE);
+    }
 }

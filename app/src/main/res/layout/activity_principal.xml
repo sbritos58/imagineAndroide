@@ -42,6 +42,16 @@
                 android:textSize="18sp" />
 
             <Button
+                android:id="@+id/btnMapa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16px"
+                android:background="@color/accentColor"
+                android:text="Mapas"
+                android:textColor="@color/textIcons"
+                android:textSize="18sp" />
+
+            <Button
                 android:id="@+id/cerrarSesion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

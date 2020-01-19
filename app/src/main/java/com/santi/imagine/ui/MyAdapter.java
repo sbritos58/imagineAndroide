@@ -43,12 +43,7 @@ public class MyAdapter extends FirestoreRecyclerAdapter<AdapterProductos, MyAdap
 
         holder.titulo.setText(articulo.getProducto());
         holder.descripcion.setText(articulo.getDescripcion());
-
-        if(!articulo.getUrl().isEmpty()){
-            Picasso.get().load(articulo.getUrl()).into(holder.profilePic);
-        }
-
-
+        Picasso.get().load(articulo.getUrl()).into(holder.profilePic);
         holder.tokenUsuario.setText(articulo.getTokenUsuario());
         holder.cantidad.setText(articulo.getCantidad());
         holder.foto.setText(articulo.getUrl());
