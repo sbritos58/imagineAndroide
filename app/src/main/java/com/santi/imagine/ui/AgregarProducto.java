@@ -13,7 +13,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -44,20 +43,19 @@ public class AgregarProducto extends AppCompatActivity {
 
 
     private static final int IMAGE_CAPTURE_CODE = 1001;
-    Button btnFoto,btnDonar;
-    EditText etProducto,etCantidad,etCiudad,etDescripcion;
+    Button btnFoto,btnDonar,btnSeleccionarUbicacion;
+    EditText etProducto,etCantidad,etUbicacion,etDescripcion;
     private StorageReference storageReference;
-    Spinner etPais;
+    EditText etPais;
     private static final int GALLERY_INTENT = 1;
-    String producto,cantidad,pais,ciudad,descripcion;
+    String producto,cantidad,pais,ubicacion,descripcion;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firestore;
     String urlFotos,tokenUsuario;
     static final int REQUEST_IMAGE_CAPTURE = 10;
     ProgressBar progressBar;
-    Uri image_uri;
-
-
+    String latitude,longitude,country,ciudad,direccion,estado,codigoPostal;
+    private int CODIGO_BTN_SELECCIONAR = 58;
 
 
     @Override
@@ -69,16 +67,31 @@ public class AgregarProducto extends AppCompatActivity {
         btnDonar = (Button)findViewById(R.id.btnDonar);
         etProducto = (EditText)findViewById(R.id.etProducto);
         etCantidad = (EditText)findViewById(R.id.etCantidad);
-        etPais = (Spinner)findViewById(R.id.spinner);
-        etCiudad = (EditText)findViewById(R.id.etCiudad);
+        etPais = (EditText) findViewById(R.id.etPais);
+        etUbicacion = (EditText)findViewById(R.id.etUbicacion);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
         etDescripcion = (EditText)findViewById(R.id.etDescripcion);
         firestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
+        btnSeleccionarUbicacion =(Button)findViewById(R.id.btnSeleccionarUbicacion);
 
         storageReference = FirebaseStorage.getInstance().getReference();
 
         AgregarFormVisibility(true);
+
+
+
+
+        btnSeleccionarUbicacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(AgregarProducto.this, MapaRegistro.class);
+                etUbicacion.setVisibility(View.VISIBLE);
+                etPais.setVisibility(View.VISIBLE);
+                startActivityForResult(i,CODIGO_BTN_SELECCIONAR);
+            }
+        });
 
 
         btnDonar.setOnClickListener(new View.OnClickListener() {
@@ -89,8 +102,8 @@ public class AgregarProducto extends AppCompatActivity {
 
                 producto = etProducto.getText().toString();
                 cantidad = etCantidad.getText().toString();
-                pais = etPais.getSelectedItem().toString();
-                ciudad = etCiudad.getText().toString();
+                pais = etPais.getText().toString();
+                ubicacion = etUbicacion.getText().toString();
                 descripcion = etDescripcion.getText().toString();
 
                 if (descripcion.isEmpty()) {
@@ -105,8 +118,8 @@ public class AgregarProducto extends AppCompatActivity {
                         if (pais.isEmpty()) {
                             etProducto.setError("Rellene el campo País");
                         } else {
-                            if (ciudad.isEmpty()) {
-                                etCiudad.setError("Rellene este campo por favor");
+                            if (ubicacion.isEmpty()) {
+                                etUbicacion.setError("Rellene este campo por favor");
                             } else {
 
 
@@ -117,7 +130,7 @@ public class AgregarProducto extends AppCompatActivity {
 
 
 
-                                Productos product = new Productos(producto, descripcion,cantidad, pais, ciudad, urlFotos, tokenUsuario);
+                                Productos product = new Productos(producto, descripcion,cantidad, pais, ubicacion, urlFotos, tokenUsuario,latitude,longitude );
 
                                 firestore.collection("Productos").document(producto+"_"+tokenUsuario).set(product)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -133,7 +146,7 @@ public class AgregarProducto extends AppCompatActivity {
                                                                 etProducto.setText("");
                                                                 etDescripcion.setText("");
                                                                 etCantidad.setText("");
-                                                                etCiudad.setText("");
+                                                                etUbicacion.setText("");
                                                                 etProducto.requestFocus();
 
                                                                 dialogInterface.cancel();
@@ -217,41 +230,28 @@ public class AgregarProducto extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+
+
+        if(resultCode == RESULT_OK && requestCode == CODIGO_BTN_SELECCIONAR){
+            direccion = data.getStringExtra("direccion");
+            ciudad = data.getExtras().getString("ciudad");
+            estado= data.getExtras().getString("estado");
+            country= data.getExtras().getString("pais");
+            codigoPostal= data.getExtras().getString("codigoPostal");
+            latitude= data.getExtras().getString("latitude");
+            longitude = data.getExtras().getString("longitude");
+            Log.i("troia",direccion);
+            etUbicacion.setText(direccion);
+            etPais.setText(country);
+        }
+
+
+
+        else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
         uploadImage(imageBitmap);
 
-
-
-
-
-
-/*
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-
-            String timeStamp = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss").format(new Date());
-
-            StorageReference mountainImagesRef = storageReference.child("Fotos/"+timeStamp+".jpg");
-
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] datas = baos.toByteArray();
-
-            UploadTask uploadTask = mountainImagesRef.putBytes(datas);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(AgregarProducto.this, "Error", Toast.LENGTH_SHORT).show();
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(AgregarProducto.this, "Se ha subido exitosamente", Toast.LENGTH_SHORT).show();
-                }
-            });*/
 
         }
 

@@ -25,10 +25,7 @@ public class Principal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
 
-
-
         firebaseAuth = FirebaseAuth.getInstance();
-
 
         btnDonador = (Button)findViewById(R.id.btnDonador);
         cerrarSesion = (Button)findViewById(R.id.cerrarSesion);
@@ -43,7 +40,7 @@ public class Principal extends AppCompatActivity {
 
                 btnMapa.startAnimation(animation);
 
-                startActivity(new Intent(Principal.this,MapsActivity.class));
+                startActivity(new Intent(Principal.this, MapitaMostrar.class));
             }
         });
 

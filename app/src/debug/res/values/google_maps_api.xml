@@ -20,6 +20,5 @@
     Once you have your key (it starts with "AIza"), replace the "google_maps_key"
     string in this file.
     -->
-    <string name="google_maps_key" translatable="false">
-AIzaSyB0oj1hR2O1LXEi2f8RWcLFTF4knm107OE</string>
+    <string name="google_maps_key" translatable="false">AIzaSyCUFemrtPt4Cz3zXMOQ9U3sTy6jHtyfSS8</string>
 </resources>

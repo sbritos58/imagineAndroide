@@ -66,7 +66,7 @@ public class SolicitudProductos extends AppCompatActivity {
 
         DocumentReference useragra = db.collection("Usuarios").document(datos_usuario.getUid());
 
-        useragra.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        useragra.get().addOnSuccessListener(    new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 usuarioagra = documentSnapshot.toObject(Usuarios.class);

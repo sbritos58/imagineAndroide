@@ -1,42 +1,30 @@
 package com.santi.imagine.models;
 
 public class Productos {
+
+
     private String producto;
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
     private String descripcion;
     private String cantidad;
     private String pais;
-    private String ciudad;
+    private String ubicacion;
     private String url;
-
-    public String getTokenUsuario() {
-        return tokenUsuario;
-    }
-
-    public void setTokenUsuario(String tokenUsuario) {
-        this.tokenUsuario = tokenUsuario;
-    }
-
+    private String latitude;
+    private String longitude;
     private String tokenUsuario;
 
     public Productos() {
     }
 
-    public Productos(String producto,String descripcion, String cantidad, String pais, String ciudad, String url, String tokenUsuario) {
+    public Productos(String producto, String descripcion, String cantidad, String pais,String ubicacion, String url, String tokenUsuario, String latitude, String longitude) {
         this.descripcion = descripcion;
         this.producto = producto;
         this.cantidad = cantidad;
         this.pais = pais;
-        this.ciudad = ciudad;
+        this.ubicacion = ubicacion;
         this.url = url;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.tokenUsuario = tokenUsuario;
     }
 
@@ -63,14 +51,14 @@ public class Productos {
     public void setPais(String pais) {
         this.pais = pais;
     }
-
-    public String getCiudad() {
-        return ciudad;
+    public String getUbicacion() {
+        return ubicacion;
     }
 
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
+    public void setUbicacion(String ubicacion) {
+        this.ubicacion = ubicacion;
     }
+
 
     public String getUrl() {
         return url;
@@ -79,4 +67,38 @@ public class Productos {
     public void setUrl(String url) {
         this.url = url;
     }
-}
+
+
+    public String getTokenUsuario() {
+        return tokenUsuario;
+    }
+
+    public void setTokenUsuario(String tokenUsuario) {
+        this.tokenUsuario = tokenUsuario;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+        public String getDescripcion () {
+            return descripcion;
+        }
+
+        public void setDescripcion (String descripcion){
+            this.descripcion = descripcion;
+        }
+
+
+        public String getLongitude () {
+            return longitude;
+        }
+
+        public void setLongitude (String longitude){
+            this.longitude = longitude;
+        }
+
+    }

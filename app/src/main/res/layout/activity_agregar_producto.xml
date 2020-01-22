@@ -64,29 +64,48 @@
                 android:textSize="20sp"
                 android:textStyle="italic" />
 
-            <Spinner
-                android:id="@+id/spinner"
-                android:background="@color/colorPrimaryDark"
-                android:layout_width="match_parent"
-                android:popupBackground="@color/colorPrimaryDark"
-                android:textAlignment="center"
-                android:textSize="20dp"
-                android:layout_height="50dp"
-                android:entries="@array/Paises"/>
-
             <EditText
-                android:id="@+id/etCiudad"
-                android:textColorHint="@color/secondatyText"
+                android:id="@+id/etPais"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20sp"
+                android:clickable="false"
                 android:ems="10"
-                android:hint="@string/ProductoCiudad"
+                android:enabled="false"
+                android:hint="@string/ProductoPais"
                 android:inputType="textPersonName"
                 android:singleLine="true"
                 android:textAlignment="center"
+                android:textColorHint="@color/textIcons"
                 android:textSize="20sp"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/etUbicacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:clickable="false"
+                android:ems="10"
+                android:enabled="false"
+                android:hint="Ubicación"
+                android:inputType="textPersonName"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColorHint="@color/textIcons"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnSeleccionarUbicacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/accentColor"
+                android:text="seleccionar Ubicación producto"
+                android:textColor="@color/textIcons"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/btnFoto"

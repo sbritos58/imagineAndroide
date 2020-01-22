@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -36,11 +37,14 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyB0oj1hR2O1LXEi2f8RWcLFTF4knm107OE" />
+            android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".ui.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:name=".ui.MapitaMostrar"
+            android:label="@string/title_activity_mapita_mostrar"></activity>
+        <activity
+            android:name=".ui.MapaRegistro"
+            android:label="@string/title_activity_maps" />
         <activity android:name=".ui.SolicitudProductos" />
         <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.AgregarProducto" />

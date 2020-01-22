@@ -285,6 +285,7 @@
     </string-array>
     <string name="title_activity_mapa">Map</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_mapita_mostrar">Map</string>
 
 
 </resources>
