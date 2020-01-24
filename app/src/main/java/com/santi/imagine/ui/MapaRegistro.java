@@ -1,10 +1,16 @@
 package com.santi.imagine.ui;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
@@ -16,8 +22,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.santi.imagine.R;
 
 import java.io.IOException;
@@ -32,6 +38,7 @@ public class MapaRegistro extends FragmentActivity implements OnMapReadyCallback
     String direccion,ciudad,estado,pais,codigoPostal;
     List<Address> ubicaciones;
     public int CODIGO_FINAL = 101;
+    Double latit=0.00,lng=0.00;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +65,15 @@ public class MapaRegistro extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        miUbicacion();
+
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         UiSettings uiSettings = mMap.getUiSettings();
         uiSettings.setZoomControlsEnabled(true);
-
+        uiSettings.setMyLocationButtonEnabled(true);
+        mMap.setMyLocationEnabled(true);
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        float zoomLevel = 16;
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
@@ -102,8 +109,57 @@ public class MapaRegistro extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,zoomLevel));
     }
+
+    private void actualizarUbicacion(Location location) {
+        if (location != null) {
+            latit = location.getLatitude();
+            lng = location.getLongitude();
+            LatLng latLng = new LatLng(latit,lng);
+
+            CameraPosition cameraPosition = CameraPosition.builder()
+                    .target(latLng)
+                    .zoom(15)
+                    .build();
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        }
+    }
+
+    LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            actualizarUbicacion(location);
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String s) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String s) {
+
+        }
+    };
+
+    private void miUbicacion() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            return;
+        }
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        actualizarUbicacion(location);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,15000,0,locationListener);
+
+    }
+
 
     @Override
     public void onBackPressed() {

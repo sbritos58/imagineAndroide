@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,10 +22,10 @@ import com.santi.imagine.R;
 import com.santi.imagine.models.Usuarios;
 import com.squareup.picasso.Picasso;
 
-public class SolicitudProductos extends AppCompatActivity {
+public class Solicitud2 extends AppCompatActivity {
 
     TextView tv2,tv3,tv4,tv5;
-    Button button;
+    Button button,solicitar,volver;
 
     private FirebaseFirestore db;
     private FirebaseAuth firebaseAuth;
@@ -39,12 +38,10 @@ public class SolicitudProductos extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_solicitud_productos);
+        setContentView(R.layout.solicitud2);
 
         db = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
-
-
 
         Bundle extras = getIntent().getExtras() ;
         tokenUsuario1 = extras.getString("Usuario");
@@ -58,22 +55,50 @@ public class SolicitudProductos extends AppCompatActivity {
         tv4 = (TextView)findViewById(R.id.tv4);
         tv5 = (TextView)findViewById(R.id.tv5);
         pb = (ProgressBar) findViewById(R.id.pb);
+        solicitar = (Button)findViewById(R.id.btnSolicitar);
+        volver = (Button)findViewById(R.id.btnVolver);
 
-        progressbar(false);
+        progressbar(true);
 
         FirebaseUser datos_usuario = firebaseAuth.getCurrentUser();
 
-
         DocumentReference useragra = db.collection("Usuarios").document(datos_usuario.getUid());
 
-        useragra.get().addOnSuccessListener(    new OnSuccessListener<DocumentSnapshot>() {
+        volver.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                usuarioagra = documentSnapshot.toObject(Usuarios.class);
-
+            public void onClick(View view) {
+                finish();
             }
         });
 
+        solicitar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressbar(true);
+                final Intent email = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"));
+                email.putExtra(Intent.EXTRA_EMAIL,new String[]{usuario.getEmail()});
+                email.putExtra(Intent.EXTRA_TEXT,"Contacte a su donador");
+                email.setType("message/rfc822");
+                startActivity(Intent.createChooser(email,"Elige un cliente de email"));
+                db.collection("Productos").document(producto+"_"+tokenUsuario1)
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+
+                                Log.i("PRODUCTO BORRADO CON EXITO","se ha borrado el producto " + producto);
+                            }
+                        });
+                finish();
+            }
+        });
+
+        useragra.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                usuarioagra = documentSnapshot.toObject(Usuarios.class);
+            }
+        });
 
         DocumentReference docref = db.collection("Usuarios").document(tokenUsuario1);
 
@@ -84,68 +109,12 @@ public class SolicitudProductos extends AppCompatActivity {
                 tv2.setText("Gracias " +  usuarioagra.getNombreCompleto());
                 tv3.setText("Le has solicitado a " + usuario.getNombreCompleto());
                 tv4.setText(producto);
-                tv5.setText(cantidad + " unidades");
+                tv5.setText(cantidad + "unidades");
                 Picasso.get().load(imagen).into(im);
-
-
-                final Intent email = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"));
-                email.putExtra(Intent.EXTRA_EMAIL,new String[]{usuario.getEmail()});
-                email.putExtra(Intent.EXTRA_TEXT,"Contacte a su donador");
-                email.setType("message/rfc822");
-
-
-                Thread timer = new Thread(){
-                    public void run() {
-                        try {
-                            sleep(2500);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        } finally {
-                            startActivity(Intent.createChooser(email,"Elige un cliente de email"));
-                            finish();
-
-                        }
-                    }
-                };
-                timer.start();
-
-
 
             }
         });
 
-
-
-            }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        db.collection("Productos").document(producto+"_"+tokenUsuario1)
-                .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-
-
-                        Log.i("PRODUCTO BORRADO CON EXITO","se ha borrado el producto " + producto);
-                    }
-                });
-
-        Thread timer = new Thread(){
-            public void run() {
-                try {
-                    sleep(2600);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } finally {
-                    startActivity(new Intent(SolicitudProductos.this,Principal.class));
-
-
-                }
-            }
-        };
-        timer.start();
     }
 
 
@@ -161,3 +130,4 @@ public class SolicitudProductos extends AppCompatActivity {
         pb.setVisibility(showForm ? View.GONE : View.VISIBLE);
     }
 }
+
