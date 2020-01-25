@@ -13,9 +13,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:textSize="24dp"
         android:text="Gracias"
-        android:textColor="@color/textIcons"
+        android:textColor="@color/primaryText"
+        android:textSize="24dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,6 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="TextView"
+        android:textColor="@color/primaryText"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv2" />
@@ -36,6 +39,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="TextView"
+        android:textColor="@color/primaryText"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv3" />
@@ -46,6 +51,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="TextView"
+        android:textColor="@color/primaryText"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv4" />
@@ -66,7 +73,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:text="Redireccionando a su email..."
-        android:textSize="18sp"
+        android:textColor="@color/primaryText"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv" />

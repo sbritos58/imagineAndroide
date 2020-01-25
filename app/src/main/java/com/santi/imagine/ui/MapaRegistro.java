@@ -46,6 +46,10 @@ public class MapaRegistro extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
 
+
+
+
+
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
         if(status== ConnectionResult.SUCCESS){
 
@@ -159,6 +163,9 @@ public class MapaRegistro extends FragmentActivity implements OnMapReadyCallback
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,15000,0,locationListener);
 
     }
+
+
+
 
 
     @Override

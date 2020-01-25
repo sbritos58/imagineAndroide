@@ -1,6 +1,9 @@
 package com.santi.imagine.ui;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -14,9 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -58,6 +63,15 @@ public class Login extends AppCompatActivity {
         loginFormVisibility(true);
         firebaseAuth = FirebaseAuth.getInstance();
         linearLayout.setVisibility(View.GONE);
+
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            verifyPermission();
+        }
+
+        int permissionCheck = ContextCompat.checkSelfPermission(Login.this,
+                Manifest.permission.ACCESS_COARSE_LOCATION);
 
 
 
@@ -237,6 +251,28 @@ public class Login extends AppCompatActivity {
 
 
     }
+
+    private void verifyPermission() {
+        int permsRequestCode = 100;
+        String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+        int accessFinePermission = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+        int accessCoarsePermission = checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        if (accessFinePermission == PackageManager.PERMISSION_GRANTED && accessCoarsePermission == PackageManager.PERMISSION_GRANTED) {
+            //se realiza metodo si es necesario...
+        } else {
+            requestPermissions(perms, permsRequestCode);
+        }
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 100:
+                Toast.makeText(this, "permiso aceptado?", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
 
     @Override
     public void onBackPressed() {

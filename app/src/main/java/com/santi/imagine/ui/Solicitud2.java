@@ -106,10 +106,10 @@ public class Solicitud2 extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 usuario = documentSnapshot.toObject(Usuarios.class);
-                tv2.setText("Gracias " +  usuarioagra.getNombreCompleto());
-                tv3.setText("Le has solicitado a " + usuario.getNombreCompleto());
+                tv2.setText("Gracias por usar nuestro sevicio " +  usuarioagra.getNombreCompleto());
+                tv3.setText("Estas por solicitarle a " + usuario.getNombreCompleto());
                 tv4.setText(producto);
-                tv5.setText(cantidad + "unidades");
+                tv5.setText(cantidad + " unidades");
                 Picasso.get().load(imagen).into(im);
 
             }

@@ -29,6 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.santi.imagine.R;
+import com.santi.imagine.app.CustomInfoWindowAdapter;
 import com.santi.imagine.models.Productos;
 
 import java.util.ArrayList;
@@ -80,10 +81,11 @@ public class MapitaMostrar extends FragmentActivity implements OnMapReadyCallbac
                         Log.i("putaso", product.getLatitude());
 
                         com.google.android.gms.maps.model.Marker m;
-                        String texto = product.getProducto() + "\n" + product.getDescripcion() + "\n" + product.getCantidad();
+                        String texto = product.getDescripcion() + "\nCantidad: " + product.getCantidad();
 
                         m=mMap.addMarker(new MarkerOptions().position(new LatLng(latitud, longitud)).title(product.getProducto()).snippet(texto));
-                        m.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.imagine));
+                        m.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.iconosmapasforeground));
+                        mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(getLayoutInflater()));
                         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                             @Override
                             public void onInfoWindowClick(com.google.android.gms.maps.model.Marker marker) {

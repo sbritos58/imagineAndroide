@@ -7,61 +7,95 @@
     tools:context=".ui.Principal"
     android:background="@color/colorPrimary">
 
-    <ScrollView
+    <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="150dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:src="@mipmap/imagine_round"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+    <Button
+        android:id="@+id/btnDonador"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/boton_redondo"
+        android:gravity="center_horizontal|center_vertical"
+        android:padding="10dp"
+        android:text="@string/Donador"
+        android:textAlignment="center"
+        android:textColor="@color/primaryText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="match_parent"
-                android:layout_height="356dp"
-                android:src="@mipmap/imagine_foreground" />
+    <Button
+        android:id="@+id/btnVerDon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/boton_redondo"
+        android:gravity="center_horizontal|center_vertical"
+        android:padding="10dp"
+        android:text="@string/VerDonaciones"
+        android:textAlignment="center"
+        android:textColor="@color/primaryText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDonador" />
 
-            <Button
-                android:id="@+id/btnDonador"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/accentColor"
-                android:text="@string/Donador"
-                android:textColor="@color/textIcons"
-                android:textSize="18sp" />
+    <Button
+        android:id="@+id/cerrarSesion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/boton_redondo"
+        android:gravity="center_horizontal|center_vertical"
+        android:padding="10dp"
+        android:text="@string/CerrarSesion"
+        android:textAlignment="center"
+        android:textColor="@color/primaryText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-            <Button
-                android:id="@+id/btnVerDon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16px"
-                android:background="@color/accentColor"
-                android:text="@string/VerDonaciones"
-                android:textColor="@color/textIcons"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/btnMapa"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16px"
-                android:background="@color/accentColor"
-                android:text="Mapas"
-                android:textColor="@color/textIcons"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/cerrarSesion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16px"
-                android:background="@color/accentColor"
-                android:text="Cerrar Sesión"
-                android:textColor="@color/textIcons"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-    </ScrollView>
+    <Button
+        android:id="@+id/btnMapa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/boton_redondo"
+        android:gravity="center_horizontal|center_vertical"
+        android:padding="10dp"
+        android:text="@string/Mapas"
+        android:textAlignment="center"
+        android:textColor="@color/primaryText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnVerDon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

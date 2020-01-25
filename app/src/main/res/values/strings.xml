@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Imagine</string>
     <string name="diferencia">Hoy podemos hacer la diferencia</string>
-    <string name="Acceder">Acceder</string>
+    <string name="Acceder">ACCEDER</string>
     <string name="Email">Email</string>
     <string name="Contrasena">Contraseña</string>
     <string name="Contrasena2">Contraseña (Min. 6 caracteres.)</string>
-    <string name="Registrarse">Registrarse</string>
+    <string name="Registrarse">REGISTRARSE</string>
     <string name="ContraOlvidada">Ha olvidado su contraseña</string>
-
+    <string name="Solicitar">SOLICITAR</string>
     <string name="Nombre">Nombre Completo</string>
     <string name="NombreOrganizacion">Nombre Organización</string>
     <string name="RepetirContrasena">Repetir Contraseña</string>
@@ -16,10 +16,10 @@
     <string name="FechaNacimiento">Edad</string>
     <string name="recuperarContra">Recuperar Contraseña</string>
     <string name="ingreseEmail">Ingrese su email de recuperación</string>
-
-    <string name="Donador">Donar</string>
-    <string name="VerDonaciones">Ver donaciones</string>
-
+    <string name="Donador">DONAR</string>
+    <string name="VerDonaciones">VER DONACIONES</string>
+    <string name="Mapas">DONACIONES EN MAPA</string>
+    <string name="CerrarSesion">CERRAR SESIÓN</string>
     <string name="ProductoDonar">Producto a donar</string>
     <string name="ProductoCantidad">Cantidad</string>
     <string name="ProductoPais">País</string>
@@ -286,6 +286,9 @@
     <string name="title_activity_mapa">Map</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_mapita_mostrar">Map</string>
+    <string name="gracias">GRACIAS</string>
+    <string name="textview">TextView</string>
+    <string name="volver">VOLVER</string>
 
 
 </resources>

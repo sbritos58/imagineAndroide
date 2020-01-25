@@ -31,12 +31,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.santi.imagine.R;
 import com.santi.imagine.models.Productos;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static com.santi.imagine.R.anim;
+import static com.santi.imagine.R.id;
+import static com.santi.imagine.R.layout;
 
 
 public class AgregarProducto extends AppCompatActivity {
@@ -61,19 +64,20 @@ public class AgregarProducto extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_agregar_producto);
+        setContentView(layout.activity_agregar_producto);
 
-        btnFoto = (Button)findViewById(R.id.btnFoto);
-        btnDonar = (Button)findViewById(R.id.btnDonar);
-        etProducto = (EditText)findViewById(R.id.etProducto);
-        etCantidad = (EditText)findViewById(R.id.etCantidad);
-        etPais = (EditText) findViewById(R.id.etPais);
-        etUbicacion = (EditText)findViewById(R.id.etUbicacion);
-        progressBar = (ProgressBar)findViewById(R.id.progressBar);
-        etDescripcion = (EditText)findViewById(R.id.etDescripcion);
+        btnFoto = (Button)findViewById(id.btnFoto);
+        btnDonar = (Button)findViewById(id.btnDonar);
+        etProducto = (EditText)findViewById(id.etProducto);
+        etCantidad = (EditText)findViewById(id.etCantidad);
+        etPais = (EditText) findViewById(id.etPais);
+        etUbicacion = (EditText)findViewById(id.etUbicacion);
+        progressBar = (ProgressBar)findViewById(id.progressBar);
+        etDescripcion = (EditText)findViewById(id.etDescripcion);
         firestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
-        btnSeleccionarUbicacion =(Button)findViewById(R.id.btnSeleccionarUbicacion);
+        btnSeleccionarUbicacion =(Button)findViewById(id.btnSeleccionarUbicacion);
+
 
         storageReference = FirebaseStorage.getInstance().getReference();
 
@@ -96,8 +100,8 @@ public class AgregarProducto extends AppCompatActivity {
 
         btnDonar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Animation animation = AnimationUtils.loadAnimation(AgregarProducto.this, R.anim.bounce);
+            public void onClick(final View view) {
+                Animation animation = AnimationUtils.loadAnimation(AgregarProducto.this, anim.bounce);
                 btnDonar.startAnimation(animation);
 
                 producto = etProducto.getText().toString();
@@ -180,7 +184,7 @@ public class AgregarProducto extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Animation animation = AnimationUtils.loadAnimation(AgregarProducto.this,R.anim.bounce);
+                Animation animation = AnimationUtils.loadAnimation(AgregarProducto.this, anim.bounce);
                 btnFoto.startAnimation(animation);
 
 
