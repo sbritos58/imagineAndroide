@@ -2,6 +2,7 @@ package com.santi.imagine.ui;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
 
 import com.airbnb.lottie.model.Marker;
@@ -159,4 +161,23 @@ public class MapitaMostrar extends FragmentActivity implements OnMapReadyCallbac
 
     }
 
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder cerrar = new AlertDialog.Builder(MapitaMostrar.this);
+        cerrar.setTitle("Volver");
+        cerrar.setMessage("¿Estas seguro de querer volver?").setCancelable(false).setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startActivity(new Intent(MapitaMostrar.this,Principal.class));
+            }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                dialogInterface.cancel();
+
+            }
+        });
+        cerrar.show();
+    }
 }

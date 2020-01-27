@@ -152,6 +152,7 @@ public class AgregarProducto extends AppCompatActivity {
                                                                 etCantidad.setText("");
                                                                 etUbicacion.setText("");
                                                                 etProducto.requestFocus();
+                                                                etPais.setText("");
 
                                                                 dialogInterface.cancel();
                                                             }

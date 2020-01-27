@@ -82,7 +82,6 @@ public class Principal extends AppCompatActivity {
 
                 Intent i = new Intent(Principal.this,AgregarProducto.class);
                 startActivity(i);
-                finish();
 
             }
         });
@@ -94,8 +93,8 @@ public class Principal extends AppCompatActivity {
                 btnVerDon.startAnimation(animation);
 
                 Intent i = new Intent(Principal.this,MainActivity.class);
-                startActivity(i);
-                finish();
+                startActivityForResult(i,10);
+
 
             }
         });
@@ -104,5 +103,23 @@ public class Principal extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        AlertDialog.Builder cerrar = new AlertDialog.Builder(Principal.this);
+        cerrar.setTitle("Volver");
+        cerrar.setMessage("¿Estas seguro de querer salir de la aplicación?").setCancelable(false).setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                System.exit(0);
+            }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                dialogInterface.cancel();
+
+            }
+        });
+        cerrar.show();
     }
+
+
 }

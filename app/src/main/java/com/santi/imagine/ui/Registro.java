@@ -1,8 +1,6 @@
 package com.santi.imagine.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +11,10 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -64,7 +66,7 @@ public class Registro extends AppCompatActivity {
         sv = (ScrollView)findViewById(R.id.sv);
 
 
-        db = FirebaseFirestore.getInstance();
+                db = FirebaseFirestore.getInstance();
         registroFormVisibility(true);
 
 
@@ -92,31 +94,36 @@ public class Registro extends AppCompatActivity {
                     Toast.makeText(Registro.this, "Rellene todos los datos del formulario", Toast.LENGTH_SHORT).show();
 
                 }else{
-                    if (contrasena.equals(repetirContra)){
-                        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+                    if(nombreCompleto.length() >= 3){
+                        if (contrasena.equals(repetirContra) && contrasena.length() > 5){
+                            String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
 
-                        if(email.matches(emailPattern) && email.length() > 0) {
+                            if(email.matches(emailPattern) && email.length() > 0) {
 
-                            if(Integer.parseInt(fecha)> 17){
-                                crearUsuario();
+                                if(Integer.parseInt(fecha)> 17){
+                                    crearUsuario();
+                                }else{
+                                    etFecha.setError("Debes ser mayor de edad");
+                                    etFecha.requestFocus();
+                                    etFecha.selectAll();
+                                }
+
+
+
                             }else{
-                                etFecha.setError("Debes ser mayor de edad");
-                                etFecha.requestFocus();
-                                etFecha.selectAll();
+                                etEmail.setError("El email es incorrecto");
                             }
 
-
-
                         }else{
-                            etEmail.setError("El email es incorrecto");
-                        }
+                            etContra.setError("Las contraseñas no coinciden");
+                            etRepetContra.setText("");
+                            etContra.setText("");
+                            etContra.requestFocus();
 
+                        }
                     }else{
-                        etContra.setError("Las contraseñas no coinciden");
-                        etRepetContra.setText("");
-                        etContra.setText("");
-                        etContra.requestFocus();
+                        Toast.makeText(Registro.this, "El nombre debe tener al menos 3 caracteres", Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -164,7 +171,7 @@ public class Registro extends AppCompatActivity {
 
         }else{
             registroFormVisibility(true);
-            Toast.makeText(this, "Error, registre sus datos de nuevo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error, registre sus datos de nuevo por favor", Toast.LENGTH_SHORT).show();
             etRepetContra.setText("");
             etContra.setText("");
             etNombreCompleto.setText("");
@@ -178,7 +185,26 @@ public class Registro extends AppCompatActivity {
     }
     private void registroFormVisibility(boolean showForm) {
         pb.setVisibility(showForm ? View.GONE : View.VISIBLE);
-        sv.setVisibility(showForm ? View.VISIBLE : View.GONE);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder cerrar = new AlertDialog.Builder(Registro.this);
+        cerrar.setTitle("Volver");
+        cerrar.setMessage("¿Estas seguro de querer volver?").setCancelable(false).setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startActivity(new Intent(Registro.this,Login.class));
+            }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                dialogInterface.cancel();
+
+            }
+        });
+        cerrar.show();
     }
 }

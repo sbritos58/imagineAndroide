@@ -1,6 +1,7 @@
 package com.santi.imagine.ui;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -254,11 +256,19 @@ public class Login extends AppCompatActivity {
 
     private void verifyPermission() {
         int permsRequestCode = 100;
-        String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+        String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE};
         int accessFinePermission = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+        int aceso = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int aceso2= checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
         int accessCoarsePermission = checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION);
 
-        if (accessFinePermission == PackageManager.PERMISSION_GRANTED && accessCoarsePermission == PackageManager.PERMISSION_GRANTED) {
+
+
+        if (accessFinePermission == PackageManager.PERMISSION_GRANTED &&
+                accessCoarsePermission == PackageManager.PERMISSION_GRANTED
+            && aceso==PackageManager.PERMISSION_GRANTED &&
+                aceso2 == PackageManager.PERMISSION_GRANTED) {
             //se realiza metodo si es necesario...
         } else {
             requestPermissions(perms, permsRequestCode);
@@ -268,7 +278,7 @@ public class Login extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case 100:
-                Toast.makeText(this, "permiso aceptado?", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Permisos Aceptados", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -276,6 +286,21 @@ public class Login extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        AlertDialog.Builder cerrar = new AlertDialog.Builder(Login.this);
+        cerrar.setTitle("Volver");
+        cerrar.setMessage("¿Estas seguro de querer salir de la aplicación?").setCancelable(false).setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                System.exit(0);
+            }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
 
+                dialogInterface.cancel();
+
+            }
+        });
+        cerrar.show();
     }
 }

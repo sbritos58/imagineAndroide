@@ -12,6 +12,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -170,6 +171,6 @@ public class MapaRegistro extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onBackPressed() {
-
+        Toast.makeText(this, "Debe seleccionar un punto sobre el mapa", Toast.LENGTH_SHORT).show();
     }
 }

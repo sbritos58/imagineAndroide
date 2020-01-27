@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.StorageReference;
 import com.santi.imagine.R;
 import com.santi.imagine.models.Usuarios;
 import com.squareup.picasso.Picasso;
@@ -34,6 +35,7 @@ public class Solicitud2 extends AppCompatActivity {
     ImageView im;
     String producto,tokenUsuario1;
     ProgressBar pb;
+    StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,9 @@ public class Solicitud2 extends AppCompatActivity {
                                 Log.i("PRODUCTO BORRADO CON EXITO","se ha borrado el producto " + producto);
                             }
                         });
+
+
+
                 finish();
             }
         });
