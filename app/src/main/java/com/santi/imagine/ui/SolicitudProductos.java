@@ -88,10 +88,12 @@ public class SolicitudProductos extends AppCompatActivity {
                 Picasso.get().load(imagen).into(im);
 
 
-                final Intent email = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"));
+                final Intent email = new Intent(Intent.ACTION_SEND);
+                email.setData(Uri.parse("mailto:"));
+
                 email.putExtra(Intent.EXTRA_EMAIL,new String[]{usuario.getEmail()});
                 email.putExtra(Intent.EXTRA_TEXT,"Contacte a su donador");
-                email.setType("message/rfc822");
+                email.setType("plain/text");
 
 
                 Thread timer = new Thread(){

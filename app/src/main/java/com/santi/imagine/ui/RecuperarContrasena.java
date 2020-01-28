@@ -95,7 +95,7 @@ public class RecuperarContrasena extends AppCompatActivity {
         cerrar.setMessage("¿Estas seguro de querer volver?").setCancelable(false).setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                startActivity(new Intent(RecuperarContrasena.this,Principal.class));
+                startActivity(new Intent(RecuperarContrasena.this,Login.class));
             }
         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override

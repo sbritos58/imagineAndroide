@@ -110,21 +110,27 @@ public class AgregarProducto extends AppCompatActivity {
                 ubicacion = etUbicacion.getText().toString();
                 descripcion = etDescripcion.getText().toString();
 
+                if (producto.isEmpty()) {
+                    etProducto.setError("Rellene este campo por favor");
+                } else
+
                 if (descripcion.isEmpty()) {
                     etDescripcion.setError("Rellene este campo por favor");
                 } else{
-                    if (producto.isEmpty()) {
-                    etProducto.setError("Rellene este campo por favor");
-                } else {
+{
                     if (cantidad.isEmpty()) {
                         etCantidad.setError("Rellene este campo por favor");
                     } else {
+                        if(urlFotos.isEmpty()){
+                            Toast.makeText(AgregarProducto.this, "Debe agregar una foto del producto por favor", Toast.LENGTH_SHORT).show();
+                        }else{
                         if (pais.isEmpty()) {
-                            etProducto.setError("Rellene el campo País");
+                            Toast.makeText(AgregarProducto.this, "Seleccione una ubicación en el mapa por favor", Toast.LENGTH_SHORT).show();
                         } else {
                             if (ubicacion.isEmpty()) {
-                                etUbicacion.setError("Rellene este campo por favor");
+                                Toast.makeText(AgregarProducto.this, "Seleccione una ubicación en el mapa por favor", Toast.LENGTH_SHORT).show();
                             } else {
+
 
 
                                 AgregarFormVisibility(false);
@@ -172,6 +178,7 @@ public class AgregarProducto extends AppCompatActivity {
 
                             }
                         }
+                    }
                     }
                 }
             }
@@ -336,7 +343,7 @@ public class AgregarProducto extends AppCompatActivity {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 AgregarFormVisibility(true);
 
-                Toast.makeText(AgregarProducto.this, "Archivo subido correctamente", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AgregarProducto.this, "Imagen subida correctamente", Toast.LENGTH_SHORT).show();
 
                 uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                     @Override

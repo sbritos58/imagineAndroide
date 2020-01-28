@@ -77,10 +77,11 @@ public class Solicitud2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 progressbar(true);
-                final Intent email = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"));
+                final Intent email = new Intent(Intent.ACTION_SEND);
+                email.setData(Uri.parse("mailto:"));
                 email.putExtra(Intent.EXTRA_EMAIL,new String[]{usuario.getEmail()});
                 email.putExtra(Intent.EXTRA_TEXT,"Contacte a su donador");
-                email.setType("message/rfc822");
+                email.setType("plain/text");
                 startActivity(Intent.createChooser(email,"Elige un cliente de email"));
                 db.collection("Productos").document(producto+"_"+tokenUsuario1)
                         .delete()
@@ -95,7 +96,9 @@ public class Solicitud2 extends AppCompatActivity {
 
 
                 finish();
+
             }
+
         });
 
         useragra.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {

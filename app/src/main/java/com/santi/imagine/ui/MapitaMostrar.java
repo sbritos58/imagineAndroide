@@ -97,6 +97,7 @@ public class MapitaMostrar extends FragmentActivity implements OnMapReadyCallbac
                                 i.putExtra("Imagen",product.getUrl());
                                 i.putExtra("Titulo",product.getProducto());
                                 startActivity(i);
+                                finish();
 
                             }
                         });
