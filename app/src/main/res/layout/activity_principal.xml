@@ -98,4 +98,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnVerDon" />
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="@string/buscando_cantidad_de_donaciones"
+        android:textAlignment="center"
+        android:textColor="@color/primaryText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnMapa" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
