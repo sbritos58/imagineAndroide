@@ -289,6 +289,7 @@
     <string name="gracias">GRACIAS</string>
     <string name="textview">TextView</string>
     <string name="volver">VOLVER</string>
+    <string name="buscando_cantidad_de_donaciones">Buscando cantidad de donaciones...</string>
 
 
 </resources>

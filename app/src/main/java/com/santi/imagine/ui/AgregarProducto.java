@@ -12,14 +12,15 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -56,9 +57,10 @@ public class AgregarProducto extends AppCompatActivity {
     FirebaseFirestore firestore;
     String urlFotos,tokenUsuario;
     static final int REQUEST_IMAGE_CAPTURE = 10;
-    ProgressBar progressBar;
     String latitude,longitude,country,ciudad,direccion,estado,codigoPostal;
     private int CODIGO_BTN_SELECCIONAR = 58;
+    LottieAnimationView subirImagen;
+    ConstraintLayout constraint;
 
 
     @Override
@@ -66,18 +68,21 @@ public class AgregarProducto extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_agregar_producto);
 
+
+
+
         btnFoto = (Button)findViewById(id.btnFoto);
         btnDonar = (Button)findViewById(id.btnDonar);
         etProducto = (EditText)findViewById(id.etProducto);
         etCantidad = (EditText)findViewById(id.etCantidad);
         etPais = (EditText) findViewById(id.etPais);
         etUbicacion = (EditText)findViewById(id.etUbicacion);
-        progressBar = (ProgressBar)findViewById(id.progressBar);
         etDescripcion = (EditText)findViewById(id.etDescripcion);
         firestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         btnSeleccionarUbicacion =(Button)findViewById(id.btnSeleccionarUbicacion);
-
+        subirImagen = (LottieAnimationView)findViewById(id.subirImagen);
+        constraint = (ConstraintLayout)findViewById(id.Constraint);
 
         storageReference = FirebaseStorage.getInstance().getReference();
 
@@ -146,7 +151,6 @@ public class AgregarProducto extends AppCompatActivity {
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                progressBar.setVisibility(View.GONE);
 
                                                 AlertDialog.Builder alerta = new AlertDialog.Builder(AgregarProducto.this);
                                                 alerta.setCancelable(false)
@@ -159,6 +163,9 @@ public class AgregarProducto extends AppCompatActivity {
                                                                 etUbicacion.setText("");
                                                                 etProducto.requestFocus();
                                                                 etPais.setText("");
+                                                                etUbicacion.setVisibility(View.GONE);
+                                                                etPais.setVisibility(View.GONE);
+                                                                AgregarFormVisibility(true);
 
                                                                 dialogInterface.cancel();
                                                             }
@@ -278,6 +285,10 @@ public class AgregarProducto extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         AgregarFormVisibility(false);
                         {
+                            AgregarFormVisibility(false);
+
+
+
 
                            final StorageReference filepath = storageReference.child("Fotos").child(uri.getLastPathSegment());
                             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -312,6 +323,7 @@ public class AgregarProducto extends AppCompatActivity {
                 });
                 siono.show();
                 AgregarFormVisibility(false);
+                AgregarFormVisibility(true);
 
 
             }
@@ -319,7 +331,9 @@ public class AgregarProducto extends AppCompatActivity {
     }
 
     private void AgregarFormVisibility(boolean showForm) {
-        progressBar.setVisibility(showForm ? View.GONE : View.VISIBLE);
+        subirImagen.setVisibility(showForm ? View.GONE : View.VISIBLE);
+        subirImagen.playAnimation();
+        constraint.setVisibility(showForm ? View.VISIBLE : View.GONE);
     }
 
     private void uploadImage(Bitmap bitmap) {

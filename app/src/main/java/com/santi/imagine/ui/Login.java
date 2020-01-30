@@ -25,6 +25,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -46,6 +47,7 @@ public class Login extends AppCompatActivity {
     boolean trylogin = false;
     private ProgressBar pb;
     private ScrollView sv;
+    LottieAnimationView subirImagen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +61,8 @@ public class Login extends AppCompatActivity {
         etContrasena = (EditText)findViewById(R.id.etContrasena);
         tvContrasenaolvidada = (TextView)findViewById(R.id.tvContrasenaolvidada);
         linearLayout = (LinearLayout)findViewById(R.id.LinearLayout);
-        pb = (ProgressBar)findViewById(R.id.pb);
         sv = (ScrollView)findViewById(R.id.sv);
+        subirImagen = (LottieAnimationView)findViewById(R.id.subirImagen);
 
         loginFormVisibility(true);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -147,7 +149,6 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
                 Animation animation =AnimationUtils.loadAnimation(Login.this,R.anim.bounce);
                 btnAcceder.startAnimation(animation);
 
@@ -160,6 +161,8 @@ public class Login extends AppCompatActivity {
                     etContrasena.setError("La contraseña es obligatoria");
 
                 }else {
+                    loginFormVisibility(false);
+
                     loginUsuario();
                 }
 
@@ -183,7 +186,8 @@ public class Login extends AppCompatActivity {
     }
 
         private void loginFormVisibility(boolean showForm) {
-                pb.setVisibility(showForm ? View.GONE : View.VISIBLE);
+                subirImagen.setVisibility(showForm ? View.GONE : View.VISIBLE);
+                subirImagen.playAnimation();
                 sv.setVisibility(showForm ? View.VISIBLE : View.GONE);
 
         }
@@ -201,6 +205,7 @@ public class Login extends AppCompatActivity {
                     FirebaseUser user = firebaseAuth.getCurrentUser();
                     updateUI(user);
 
+
                 }else{
                     Log.w("TAG","Error en inicio");    }
                     updateUI(null);
@@ -209,6 +214,7 @@ public class Login extends AppCompatActivity {
     }else{
             etEmail.setError("Escriba el email correctamente");
         }
+        loginFormVisibility(true);
     }
 
     private void updateUI(FirebaseUser user) {

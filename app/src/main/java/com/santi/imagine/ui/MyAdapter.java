@@ -116,7 +116,7 @@ public class MyAdapter extends FirestoreRecyclerAdapter<AdapterProductos, MyAdap
                                     intent.putExtra("Titulo",titulo.getText());
 
 
-                                    
+
                                     context.startActivity(intent);
 
                                 }

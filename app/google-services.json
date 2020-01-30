@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "334463099-qjtpugqmltc7j94ue3k3oabu7qlhveht.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.santi.imagine",
+            "certificate_hash": "d65e8ef111c244e37bbdcd058da07d0d0afb1109"
+          }
+        },
+        {
           "client_id": "334463099-g2jpb88bcan0j7363hcmj52oebnf39o8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
