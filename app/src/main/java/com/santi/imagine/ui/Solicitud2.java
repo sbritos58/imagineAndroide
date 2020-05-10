@@ -66,6 +66,15 @@ public class Solicitud2 extends AppCompatActivity {
 
         DocumentReference useragra = db.collection("Usuarios").document(datos_usuario.getUid());
 
+
+        useragra.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                usuarioagra = documentSnapshot.toObject(Usuarios.class);
+            }
+        });
+
+
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,12 +110,7 @@ public class Solicitud2 extends AppCompatActivity {
 
         });
 
-        useragra.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                usuarioagra = documentSnapshot.toObject(Usuarios.class);
-            }
-        });
+
 
         DocumentReference docref = db.collection("Usuarios").document(tokenUsuario1);
 

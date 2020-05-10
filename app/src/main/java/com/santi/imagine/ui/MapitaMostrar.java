@@ -91,7 +91,7 @@ public class MapitaMostrar extends FragmentActivity implements OnMapReadyCallbac
                         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                             @Override
                             public void onInfoWindowClick(com.google.android.gms.maps.model.Marker marker) {
-                                Intent i = new Intent(MapitaMostrar.this,Solicitud2.class);
+                                Intent i = new Intent(MapitaMostrar.this,SolicitudProductos.class);
                                 i.putExtra("Usuario",product.getTokenUsuario());
                                 i.putExtra("Cantidad",product.getCantidad());
                                 i.putExtra("Imagen",product.getUrl());

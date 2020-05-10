@@ -207,6 +207,7 @@ public class Login extends AppCompatActivity {
 
 
                 }else{
+                    Toast.makeText(Login.this, "Error en Email o contraseña", Toast.LENGTH_SHORT).show();
                     Log.w("TAG","Error en inicio");    }
                     updateUI(null);
             }
