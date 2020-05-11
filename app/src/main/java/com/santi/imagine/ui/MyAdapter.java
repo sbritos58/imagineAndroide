@@ -103,12 +103,7 @@ public class MyAdapter extends FirestoreRecyclerAdapter<AdapterProductos, MyAdap
                     Animation animation = AnimationUtils.loadAnimation(context,R.anim.bounce);
                     solicitar.startAnimation(animation);
 
-                    AlertDialog.Builder alerta = new AlertDialog.Builder(context);
-                    alerta.setTitle("Solicitar");
-                    alerta.setMessage("Esta seguro que quiere solicitar este producto").setCancelable(false)
-                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
+
                                     Intent intent = new Intent(context,SolicitudProductos.class);
                                     intent.putExtra("Usuario",tokenUsuario.getText());
                                     intent.putExtra("Cantidad",cantidad.getText());
@@ -119,15 +114,7 @@ public class MyAdapter extends FirestoreRecyclerAdapter<AdapterProductos, MyAdap
 
                                     context.startActivity(intent);
 
-                                }
-                            }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    });
-                    AlertDialog titulo = alerta.create();
-                    titulo.show();
+
 
 
 

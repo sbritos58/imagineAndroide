@@ -344,7 +344,7 @@ public class AgregarProducto extends AppCompatActivity {
         final StorageReference ref = storageReference.child("Fotos/" +timeStamp + ".jpg");
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 25, baos);
         byte[] data = baos.toByteArray();
 
 
