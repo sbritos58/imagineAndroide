@@ -261,6 +261,8 @@ public class AgregarProducto extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             uploadImage(imageBitmap);
+            etPais.setVisibility(View.VISIBLE);
+
 
 
         } else if (resultCode == RESULT_OK && requestCode == GALLERY_INTENT) {
@@ -269,6 +271,7 @@ public class AgregarProducto extends AppCompatActivity {
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), extras);
                 uploadImage(bitmap);
+                etPais.setVisibility(View.VISIBLE);
 
             } catch (IOException e) {
                 e.printStackTrace();
