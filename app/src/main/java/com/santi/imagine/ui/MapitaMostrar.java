@@ -94,8 +94,6 @@ public class MapitaMostrar extends FragmentActivity implements OnMapReadyCallbac
                         m = mMap.addMarker(new MarkerOptions().position(new LatLng(latitud, longitud)).title(product.getProducto()).snippet(texto));
 
 
-                        Log.i("botones", String.valueOf(markerMap));
-
                         m.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.iconosmapasforeground));
                         mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(getLayoutInflater()));
 
