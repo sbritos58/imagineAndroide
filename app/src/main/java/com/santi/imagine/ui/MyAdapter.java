@@ -24,9 +24,6 @@ import com.squareup.picasso.Picasso;
 
 public class MyAdapter extends FirestoreRecyclerAdapter<AdapterProductos, MyAdapter.ViewHolder> {
 
-
-
-
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
      * FirestoreRecyclerOptions} for configuration options.
@@ -47,9 +44,6 @@ public class MyAdapter extends FirestoreRecyclerAdapter<AdapterProductos, MyAdap
         holder.tokenUsuario.setText(articulo.getTokenUsuario());
         holder.cantidad.setText(articulo.getCantidad());
         holder.foto.setText(articulo.getUrl());
-
-
-
         holder.setOnClickListeners();
 
     }
@@ -57,9 +51,9 @@ public class MyAdapter extends FirestoreRecyclerAdapter<AdapterProductos, MyAdap
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cardview,viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cardview, viewGroup, false);
 
-         return  new ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -73,12 +67,9 @@ public class MyAdapter extends FirestoreRecyclerAdapter<AdapterProductos, MyAdap
         TextView cantidad;
         TextView foto;
 
-
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             context = itemView.getContext();
-
             profilePic = itemView.findViewById(R.id.profilePic);
             titulo = itemView.findViewById(R.id.titulo);
             descripcion = itemView.findViewById(R.id.descripcion);
@@ -86,9 +77,6 @@ public class MyAdapter extends FirestoreRecyclerAdapter<AdapterProductos, MyAdap
             tokenUsuario = itemView.findViewById(R.id.tokenUsuario);
             foto = itemView.findViewById(R.id.foto);
             cantidad = itemView.findViewById(R.id.cantidad);
-
-
-
         }
 
         public void setOnClickListeners() {
@@ -98,27 +86,17 @@ public class MyAdapter extends FirestoreRecyclerAdapter<AdapterProductos, MyAdap
 
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.solicitar:
-                    Animation animation = AnimationUtils.loadAnimation(context,R.anim.bounce);
+                    Animation animation = AnimationUtils.loadAnimation(context, R.anim.bounce);
                     solicitar.startAnimation(animation);
 
-
-                                    Intent intent = new Intent(context,SolicitudProductos.class);
-                                    intent.putExtra("Usuario",tokenUsuario.getText());
-                                    intent.putExtra("Cantidad",cantidad.getText());
-                                    intent.putExtra("Imagen",foto.getText());
-                                    intent.putExtra("Titulo",titulo.getText());
-
-
-
-                                    context.startActivity(intent);
-
-
-
-
-
-
+                    Intent intent = new Intent(context, SolicitudProductos.class);
+                    intent.putExtra("Usuario", tokenUsuario.getText());
+                    intent.putExtra("Cantidad", cantidad.getText());
+                    intent.putExtra("Imagen", foto.getText());
+                    intent.putExtra("Titulo", titulo.getText());
+                    context.startActivity(intent);
                     /*Para capturar eventos de la vista lo realizamos aca*/
 
 

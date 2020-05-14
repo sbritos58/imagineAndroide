@@ -35,6 +35,7 @@ import com.google.firebase.storage.UploadTask;
 import com.santi.imagine.models.Productos;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -47,17 +48,17 @@ public class AgregarProducto extends AppCompatActivity {
 
 
     private static final int IMAGE_CAPTURE_CODE = 1001;
-    Button btnFoto,btnDonar,btnSeleccionarUbicacion;
-    EditText etProducto,etCantidad,etUbicacion,etDescripcion;
+    Button btnFoto, btnDonar, btnSeleccionarUbicacion;
+    EditText etProducto, etCantidad, etUbicacion, etDescripcion;
     private StorageReference storageReference;
     EditText etPais;
     private static final int GALLERY_INTENT = 1;
-    String producto,cantidad,pais,ubicacion,descripcion;
+    String producto, cantidad, pais, ubicacion, descripcion;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firestore;
-    String urlFotos,tokenUsuario;
+    String urlFotos, tokenUsuario;
     static final int REQUEST_IMAGE_CAPTURE = 10;
-    String latitude,longitude,country,ciudad,direccion,estado,codigoPostal;
+    String latitude, longitude, country, ciudad, direccion, estado, codigoPostal;
     private int CODIGO_BTN_SELECCIONAR = 58;
     LottieAnimationView subirImagen;
     ConstraintLayout constraint;
@@ -69,36 +70,29 @@ public class AgregarProducto extends AppCompatActivity {
         setContentView(layout.activity_agregar_producto);
 
 
-
-
-        btnFoto = (Button)findViewById(id.btnFoto);
-        btnDonar = (Button)findViewById(id.btnDonar);
-        etProducto = (EditText)findViewById(id.etProducto);
-        etCantidad = (EditText)findViewById(id.etCantidad);
+        btnFoto = (Button) findViewById(id.btnFoto);
+        btnDonar = (Button) findViewById(id.btnDonar);
+        etProducto = (EditText) findViewById(id.etProducto);
+        etCantidad = (EditText) findViewById(id.etCantidad);
         etPais = (EditText) findViewById(id.etPais);
-        etUbicacion = (EditText)findViewById(id.etUbicacion);
-        etDescripcion = (EditText)findViewById(id.etDescripcion);
+        etUbicacion = (EditText) findViewById(id.etUbicacion);
+        etDescripcion = (EditText) findViewById(id.etDescripcion);
         firestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
-        btnSeleccionarUbicacion =(Button)findViewById(id.btnSeleccionarUbicacion);
-        subirImagen = (LottieAnimationView)findViewById(id.subirImagen);
-        constraint = (ConstraintLayout)findViewById(id.Constraint);
+        btnSeleccionarUbicacion = (Button) findViewById(id.btnSeleccionarUbicacion);
+        subirImagen = (LottieAnimationView) findViewById(id.subirImagen);
+        constraint = (ConstraintLayout) findViewById(id.Constraint);
 
         storageReference = FirebaseStorage.getInstance().getReference();
 
         AgregarFormVisibility(true);
-
-
-
 
         btnSeleccionarUbicacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent i = new Intent(AgregarProducto.this, MapaRegistro.class);
-                etUbicacion.setVisibility(View.VISIBLE);
-                etPais.setVisibility(View.VISIBLE);
-                startActivityForResult(i,CODIGO_BTN_SELECCIONAR);
+                startActivityForResult(i, CODIGO_BTN_SELECCIONAR);
             }
         });
 
@@ -117,82 +111,84 @@ public class AgregarProducto extends AppCompatActivity {
 
                 if (producto.isEmpty()) {
                     etProducto.setError("Rellene este campo por favor");
-                } else
-
-                if (descripcion.isEmpty()) {
-                    etDescripcion.setError("Rellene este campo por favor");
-                } else{
-{
-                    if (cantidad.isEmpty()) {
-                        etCantidad.setError("Rellene este campo por favor");
+                } else {
+                    if (descripcion.isEmpty()) {
+                        etDescripcion.setError("Rellene este campo por favor");
                     } else {
-                        if(urlFotos.isEmpty()){
-                            Toast.makeText(AgregarProducto.this, "Debe agregar una foto del producto por favor", Toast.LENGTH_SHORT).show();
-                        }else{
-                        if (pais.isEmpty()) {
-                            Toast.makeText(AgregarProducto.this, "Seleccione una ubicación en el mapa por favor", Toast.LENGTH_SHORT).show();
-                        } else {
-                            if (ubicacion.isEmpty()) {
-                                Toast.makeText(AgregarProducto.this, "Seleccione una ubicación en el mapa por favor", Toast.LENGTH_SHORT).show();
+                        {
+                            if (cantidad.isEmpty()) {
+                                etCantidad.setError("Rellene este campo por favor");
+                            }else if(Integer.parseInt(cantidad) == 0){
+                                etCantidad.setError("El valor debe ser mayor a 0");
                             } else {
+                                if (urlFotos == null) {
+                                    Toast.makeText(AgregarProducto.this, "Debe agregar una foto del producto por favor", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    if (pais.isEmpty()) {
+                                        Toast.makeText(AgregarProducto.this, "Seleccione una ubicación en el mapa por favor", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        if (ubicacion.isEmpty()) {
+                                            Toast.makeText(AgregarProducto.this, "Seleccione una ubicación en el mapa por favor", Toast.LENGTH_SHORT).show();
+                                        } else {
 
 
+                                            AgregarFormVisibility(false);
 
-                                AgregarFormVisibility(false);
+                                            FirebaseUser usuario = firebaseAuth.getCurrentUser();
+                                            tokenUsuario = usuario.getUid();
 
-                                FirebaseUser usuario = firebaseAuth.getCurrentUser();
-                                tokenUsuario = usuario.getUid();
+                                            Productos product = new Productos(producto, descripcion, cantidad, pais, ubicacion, urlFotos, tokenUsuario, latitude, longitude);
+
+                                            firestore.collection("Productos").document(producto + "_" + tokenUsuario).set(product)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+
+                                                            AlertDialog.Builder alerta = new AlertDialog.Builder(AgregarProducto.this);
+                                                            alerta.setCancelable(false)
+                                                                    .setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                                                            etProducto.setText("");
+                                                                            etDescripcion.setText("");
+                                                                            etCantidad.setText("");
+                                                                            etUbicacion.setText("");
+                                                                            etProducto.requestFocus();
+                                                                            etPais.setText("");
+                                                                            etPais.setVisibility(View.GONE);
+                                                                            etUbicacion.setVisibility(View.GONE);
+                                                                            AgregarFormVisibility(true);
+
+                                                                            dialogInterface.cancel();
+                                                                            finish();
+                                                                            Intent francia = new Intent(AgregarProducto.this, AgregarProducto.class);
+                                                                            startActivity(francia);
+                                                                        }
+                                                                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                                    finish();
+                                                                    Intent isisi = new Intent(AgregarProducto.this, Principal.class);
+                                                                    startActivity(isisi);
+                                                                }
+                                                            });
+                                                            AlertDialog titulo = alerta.create();
+                                                            titulo.setTitle("¿Desea donar otro producto?");
+                                                            titulo.show();
+                                                        }
+                                                    });
 
 
-
-                                Productos product = new Productos(producto, descripcion,cantidad, pais, ubicacion, urlFotos, tokenUsuario,latitude,longitude );
-
-                                firestore.collection("Productos").document(producto+"_"+tokenUsuario).set(product)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-
-                                                AlertDialog.Builder alerta = new AlertDialog.Builder(AgregarProducto.this);
-                                                alerta.setCancelable(false)
-                                                        .setPositiveButton("SI", new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                                etProducto.setText("");
-                                                                etDescripcion.setText("");
-                                                                etCantidad.setText("");
-                                                                etUbicacion.setText("");
-                                                                etProducto.requestFocus();
-                                                                etPais.setText("");
-                                                                etUbicacion.setVisibility(View.GONE);
-                                                                etPais.setVisibility(View.GONE);
-                                                                AgregarFormVisibility(true);
-
-                                                                dialogInterface.cancel();
-                                                            }
-                                                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                                        Intent isisi = new Intent(AgregarProducto.this, Principal.class);
-                                                        startActivity(isisi);
-                                                    }
-                                                });
-                                                AlertDialog titulo = alerta.create();
-                                                titulo.setTitle("¿Desea donar otro producto?");
-                                                titulo.show();
-                                            }
-                                        });
-
-
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
-                    }
                 }
-            }
 
             }
         });
-
 
 
         btnFoto.setOnClickListener(new View.OnClickListener() {
@@ -203,8 +199,7 @@ public class AgregarProducto extends AppCompatActivity {
                 btnFoto.startAnimation(animation);
 
 
-
-                final CharSequence[] opciones = {"Tomar foto","Cargar imagen","Cancelar"};
+                final CharSequence[] opciones = {"Tomar foto", "Cargar imagen", "Cancelar"};
 
                 final AlertDialog.Builder alertOpciones = new AlertDialog.Builder(AgregarProducto.this);
                 alertOpciones.setTitle("Seleccione una opción");
@@ -212,20 +207,21 @@ public class AgregarProducto extends AppCompatActivity {
                 alertOpciones.setItems(opciones, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if (opciones[i].equals("Tomar foto")){
+                        if (opciones[i].equals("Tomar foto")) {
                             tomarFotografia();
                             //TODO ACA VA LA APERTURA DE LA CAMARA
-                        }else{
-                            if(opciones[i].equals("Cargar imagen")){
+                        } else {
+                            if (opciones[i].equals("Cargar imagen")) {
                                 Intent intent = new Intent(Intent.ACTION_PICK);
                                 intent.setType("image/*");
-                                startActivityForResult(intent,GALLERY_INTENT);
-                            }else{
+                                startActivityForResult(intent, GALLERY_INTENT);
+                            } else {
                                 dialogInterface.dismiss();
                             }
                         }
                     }
-                });alertOpciones.show();
+                });
+                alertOpciones.show();
             }
         });
 
@@ -233,15 +229,14 @@ public class AgregarProducto extends AppCompatActivity {
     }
 
     private void tomarFotografia() {
-            //TODO ACA VA LA APERTURA DE LA CAMARA SUBIR FOTOS ETC.
+        //TODO ACA VA LA APERTURA DE LA CAMARA SUBIR FOTOS ETC.
 
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
 
-        }
-
+    }
 
 
     //Esto sirve para obtener imagen desde la galeria
@@ -250,83 +245,37 @@ public class AgregarProducto extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
 
-
-        if(resultCode == RESULT_OK && requestCode == CODIGO_BTN_SELECCIONAR){
+        if (resultCode == RESULT_OK && requestCode == CODIGO_BTN_SELECCIONAR) {
             direccion = data.getStringExtra("direccion");
             ciudad = data.getExtras().getString("ciudad");
-            estado= data.getExtras().getString("estado");
-            country= data.getExtras().getString("pais");
-            codigoPostal= data.getExtras().getString("codigoPostal");
-            latitude= data.getExtras().getString("latitude");
+            estado = data.getExtras().getString("estado");
+            country = data.getExtras().getString("pais");
+            codigoPostal = data.getExtras().getString("codigoPostal");
+            latitude = data.getExtras().getString("latitude");
             longitude = data.getExtras().getString("longitude");
-            Log.i("troia",direccion);
+            Log.i("troy", direccion);
             etUbicacion.setText(direccion);
+            etUbicacion.setVisibility(View.VISIBLE);
             etPais.setText(country);
-        }
-
-
-
-        else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-        uploadImage(imageBitmap);
+            uploadImage(imageBitmap);
+
+
+        } else if (resultCode == RESULT_OK && requestCode == GALLERY_INTENT) {
+            Uri extras = data.getData();
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), extras);
+                uploadImage(bitmap);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
 
         }
-
-            else if(resultCode == RESULT_OK && requestCode == GALLERY_INTENT) {
-
-                final Uri uri = data.getData();
-
-                AlertDialog.Builder siono = new AlertDialog.Builder(AgregarProducto.this);
-                siono.setTitle("Volver");
-                siono.setMessage("¿Estas seguro de subir esta imagen?").setCancelable(false).setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        AgregarFormVisibility(false);
-                        {
-                            AgregarFormVisibility(false);
-
-
-
-
-                           final StorageReference filepath = storageReference.child("Fotos").child(uri.getLastPathSegment());
-                            filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-
-                                    filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-
-                                            urlFotos = uri.toString();
-
-                                            AgregarFormVisibility(true);
-                                            Toast.makeText(AgregarProducto.this, "Imagen recibida satisfactoriamente", Toast.LENGTH_SHORT).show();
-
-                                        }
-                                    });
-
-                                }
-                            });
-                        }
-
-                    }
-                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                        AgregarFormVisibility(true);
-
-                    }
-                });
-                siono.show();
-                AgregarFormVisibility(false);
-                AgregarFormVisibility(true);
-
-
-            }
 
     }
 
@@ -341,14 +290,11 @@ public class AgregarProducto extends AppCompatActivity {
 
         String timeStamp = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss").format(new Date());
 
-        final StorageReference ref = storageReference.child("Fotos/" +timeStamp + ".jpg");
+        final StorageReference ref = storageReference.child("Fotos/" + timeStamp + ".jpg");
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 25, baos);
         byte[] data = baos.toByteArray();
-
-
-
 
 
         final UploadTask uploadTask = ref.putBytes(data);
@@ -365,12 +311,12 @@ public class AgregarProducto extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             throw task.getException();
                         }
-                       ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                           @Override
-                           public void onSuccess(Uri uri) {
-                               urlFotos = uri.toString();
-                           }
-                       });
+                        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                urlFotos = uri.toString();
+                            }
+                        });
                         return ref.getDownloadUrl();
                     }
                 }).addOnCompleteListener(new OnCompleteListener<Uri>() {
@@ -398,13 +344,13 @@ public class AgregarProducto extends AppCompatActivity {
         cerrar.setMessage("¿Estas seguro de querer volver?").setCancelable(false).setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                startActivity(new Intent(AgregarProducto.this,Principal.class));
+                startActivity(new Intent(AgregarProducto.this, Principal.class));
             }
         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-            dialogInterface.cancel();
+                dialogInterface.cancel();
 
             }
         });

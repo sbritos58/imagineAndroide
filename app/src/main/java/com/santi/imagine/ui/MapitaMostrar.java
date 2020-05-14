@@ -35,6 +35,8 @@ import com.santi.imagine.app.CustomInfoWindowAdapter;
 import com.santi.imagine.models.Productos;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class MapitaMostrar extends FragmentActivity implements OnMapReadyCallback {
 
@@ -72,25 +74,37 @@ public class MapitaMostrar extends FragmentActivity implements OnMapReadyCallbac
         miUbicacion();
 
 
-        mDataBase.collection("Productos").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+        final Task<QuerySnapshot> batata = mDataBase.collection("Productos").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+                    final Integer ricardo = task.getResult().size();//   valor  =  5
+
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         final Productos product = document.toObject(Productos.class);
+                        Log.i("batata", product.toString());
                         latitud = Double.valueOf(product.getLatitude());
                         longitud = Double.valueOf(product.getLongitude());
-                        Log.i("putaso", product.getLatitude());
+                        Log.i("arriba", product.getLatitude());
 
                         com.google.android.gms.maps.model.Marker m;
                         String texto = product.getDescripcion() + "\nCantidad: " + product.getCantidad();
 
-                        m=mMap.addMarker(new MarkerOptions().position(new LatLng(latitud, longitud)).title(product.getProducto()).snippet(texto));
+                        m = mMap.addMarker(new MarkerOptions().position(new LatLng(latitud, longitud)).title(product.getProducto()).snippet(texto));
+
+
+                        Log.i("botones", String.valueOf(markerMap));
+
                         m.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.iconosmapasforeground));
                         mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(getLayoutInflater()));
+
+
+
                         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                             @Override
                             public void onInfoWindowClick(com.google.android.gms.maps.model.Marker marker) {
+
                                 Intent i = new Intent(MapitaMostrar.this,SolicitudProductos.class);
                                 i.putExtra("Usuario",product.getTokenUsuario());
                                 i.putExtra("Cantidad",product.getCantidad());

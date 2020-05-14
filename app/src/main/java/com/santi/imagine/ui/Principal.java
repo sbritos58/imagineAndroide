@@ -22,7 +22,7 @@ import com.santi.imagine.R;
 
 public class Principal extends AppCompatActivity {
 
-    private Button btnDonador, btnVerDon,cerrarSesion,btnMapa;
+    private Button btnDonador, btnVerDon, cerrarSesion, btnMapa;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestore;
     private int cantidad;
@@ -36,11 +36,11 @@ public class Principal extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        btnDonador = (Button)findViewById(R.id.btnDonador);
-        cerrarSesion = (Button)findViewById(R.id.cerrarSesion);
-        btnVerDon = (Button)findViewById(R.id.btnVerDon);
-        btnMapa = (Button)findViewById(R.id.btnMapa);
-        textView3 = (TextView)findViewById(R.id.textView3);
+        btnDonador = (Button) findViewById(R.id.btnDonador);
+        cerrarSesion = (Button) findViewById(R.id.cerrarSesion);
+        btnVerDon = (Button) findViewById(R.id.btnVerDon);
+        btnMapa = (Button) findViewById(R.id.btnMapa);
+        textView3 = (TextView) findViewById(R.id.textView3);
 
 
         firestore = FirebaseFirestore.getInstance();
@@ -48,18 +48,18 @@ public class Principal extends AppCompatActivity {
         firestore.collection("Productos").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     cantidad = task.getResult().size();
 
-                    switch (cantidad){
+                    switch (cantidad) {
                         case 0:
                             textView3.setText("En este momento no tenemos donaciones disponibles");
                             break;
                         case 1:
-                            textView3.setText(String.valueOf("En este momento tenemos " + cantidad+" donación disponible"));
+                            textView3.setText(String.valueOf("En este momento tenemos " + cantidad + " donación disponible"));
                             break;
                         default:
-                            textView3.setText(String.valueOf("En este momento tenemos " + cantidad+" donaciones disponibles"));
+                            textView3.setText(String.valueOf("En este momento tenemos " + cantidad + " donaciones disponibles"));
                             break;
                     }
 
@@ -68,11 +68,10 @@ public class Principal extends AppCompatActivity {
         });
 
 
-
         btnMapa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Animation animation = AnimationUtils.loadAnimation(Principal.this,R.anim.bounce);
+                Animation animation = AnimationUtils.loadAnimation(Principal.this, R.anim.bounce);
 
                 btnMapa.startAnimation(animation);
 
@@ -84,7 +83,7 @@ public class Principal extends AppCompatActivity {
         cerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Animation animation = AnimationUtils.loadAnimation(Principal.this,R.anim.bounce);
+                Animation animation = AnimationUtils.loadAnimation(Principal.this, R.anim.bounce);
 
                 cerrarSesion.startAnimation(animation);
                 AlertDialog.Builder cerrar = new AlertDialog.Builder(Principal.this);
@@ -94,13 +93,13 @@ public class Principal extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 firebaseAuth.signOut();
-                                Intent intent = new Intent(Principal.this,Login.class);
+                                Intent intent = new Intent(Principal.this, Login.class);
                                 startActivity(intent);
                             }
                         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                   dialogInterface.cancel();
+                        dialogInterface.cancel();
                     }
                 });
                 cerrar.show();
@@ -112,11 +111,11 @@ public class Principal extends AppCompatActivity {
         btnDonador.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Animation animation = AnimationUtils.loadAnimation(Principal.this,R.anim.bounce);
+                Animation animation = AnimationUtils.loadAnimation(Principal.this, R.anim.bounce);
 
                 btnDonador.startAnimation(animation);
 
-                Intent i = new Intent(Principal.this,AgregarProducto.class);
+                Intent i = new Intent(Principal.this, AgregarProducto.class);
                 startActivity(i);
 
             }
@@ -124,12 +123,12 @@ public class Principal extends AppCompatActivity {
         btnVerDon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Animation animation = AnimationUtils.loadAnimation(Principal.this,R.anim.bounce);
+                Animation animation = AnimationUtils.loadAnimation(Principal.this, R.anim.bounce);
 
                 btnVerDon.startAnimation(animation);
 
-                Intent i = new Intent(Principal.this,MainActivity.class);
-                startActivityForResult(i,10);
+                Intent i = new Intent(Principal.this, MainActivity.class);
+                startActivityForResult(i, 10);
 
 
             }
@@ -144,7 +143,7 @@ public class Principal extends AppCompatActivity {
         cerrar.setMessage("¿Estas seguro de querer salir de la aplicación?").setCancelable(false).setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                System.exit(0);
+                finishAffinity();
             }
         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override

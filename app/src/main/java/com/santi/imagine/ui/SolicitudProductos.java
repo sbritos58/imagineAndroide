@@ -26,7 +26,7 @@ import com.squareup.picasso.Picasso;
 
 public class SolicitudProductos extends AppCompatActivity {
 
-    TextView tv2, tv3, tv4, tv5;
+    TextView tv2, tv3, tv4, tv5,tv6;
     Button btnSolicitar, btnVolver;
 
     private FirebaseFirestore db;
@@ -37,7 +37,6 @@ public class SolicitudProductos extends AppCompatActivity {
     String producto, tokenUsuario1;
     ProgressBar pb;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,18 +45,21 @@ public class SolicitudProductos extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
 
-
         Bundle extras = getIntent().getExtras();
         tokenUsuario1 = extras.getString("Usuario");
         final String cantidad = extras.getString("Cantidad");
         final String imagen = extras.getString("Imagen");
         producto = extras.getString("Titulo");
 
+        Log.i("Jamaica",cantidad);
+        Log.i("jamaica2",producto);
+
         im = (ImageView) findViewById(R.id.iv);
         tv2 = (TextView) findViewById(R.id.tv2);
         tv3 = (TextView) findViewById(R.id.tv3);
         tv4 = (TextView) findViewById(R.id.tv4);
         tv5 = (TextView) findViewById(R.id.tv5);
+        tv6 = (TextView) findViewById(R.id.tv6);
         pb = (ProgressBar) findViewById(R.id.pb);
         btnSolicitar = (Button) findViewById(R.id.btnSolicitar);
         btnVolver = (Button) findViewById(R.id.btnVolver);
@@ -65,7 +67,6 @@ public class SolicitudProductos extends AppCompatActivity {
         progressbar(true);
 
         FirebaseUser datos_usuario = firebaseAuth.getCurrentUser();
-
 
         DocumentReference useragra = db.collection("Usuarios").document(datos_usuario.getUid());
 
@@ -84,14 +85,13 @@ public class SolicitudProductos extends AppCompatActivity {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 usuario = documentSnapshot.toObject(Usuarios.class);
                 tv2.setText("Gracias " + usuarioagra.getNombreCompleto());
-                tv3.setText("Le has solicitado a " + usuario.getNombreCompleto());
+                tv3.setText("Le vas a solicitar a " + usuario.getNombreCompleto());
                 tv4.setText(producto);
                 tv5.setText(cantidad + " unidades");
                 Picasso.get().load(imagen).into(im);
 
             }
         });
-
 
         btnSolicitar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +116,6 @@ public class SolicitudProductos extends AppCompatActivity {
                             }
                         });
 
-
                         DocumentReference docref = db.collection("Usuarios").document(tokenUsuario1);
 
                         docref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -137,12 +136,8 @@ public class SolicitudProductos extends AppCompatActivity {
                                 email.putExtra(Intent.EXTRA_TEXT, "Contacte a su donador");
                                 email.setType("plain/text");
                                 startActivity(Intent.createChooser(email, "Elige un cliente de email"));
-
-
-
                             }
                         });
-
 
                         db.collection("Productos").document(producto + "_" + tokenUsuario1)
                                 .delete()
@@ -172,6 +167,14 @@ public class SolicitudProductos extends AppCompatActivity {
 
             }
         });
+
+        btnVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
 
 
@@ -190,5 +193,7 @@ public class SolicitudProductos extends AppCompatActivity {
 
     private void progressbar(boolean showForm) {
         pb.setVisibility(showForm ? View.GONE : View.VISIBLE);
+        tv6.setVisibility(showForm ? View.GONE : View.VISIBLE);
+
     }
 }

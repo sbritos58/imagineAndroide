@@ -1,8 +1,6 @@
 package com.santi.imagine.models;
 
 public class Productos {
-
-
     private String producto;
     private String descripcion;
     private String cantidad;
