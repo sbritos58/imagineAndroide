@@ -118,7 +118,7 @@ public class AgregarProducto extends AppCompatActivity {
                         {
                             if (cantidad.isEmpty()) {
                                 etCantidad.setError("Rellene este campo por favor");
-                            }else if(Integer.parseInt(cantidad) == 0){
+                            } else if (Integer.parseInt(cantidad) == 0) {
                                 etCantidad.setError("El valor debe ser mayor a 0");
                             } else {
                                 if (urlFotos == null) {
@@ -256,13 +256,13 @@ public class AgregarProducto extends AppCompatActivity {
             Log.i("troy", direccion);
             etUbicacion.setText(direccion);
             etUbicacion.setVisibility(View.VISIBLE);
+            etPais.setVisibility(View.VISIBLE);
+
             etPais.setText(country);
         } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             uploadImage(imageBitmap);
-            etPais.setVisibility(View.VISIBLE);
-
 
 
         } else if (resultCode == RESULT_OK && requestCode == GALLERY_INTENT) {
@@ -271,7 +271,6 @@ public class AgregarProducto extends AppCompatActivity {
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), extras);
                 uploadImage(bitmap);
-                etPais.setVisibility(View.VISIBLE);
 
             } catch (IOException e) {
                 e.printStackTrace();

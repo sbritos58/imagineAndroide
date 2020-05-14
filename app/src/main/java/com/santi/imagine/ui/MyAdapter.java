@@ -38,7 +38,7 @@ public class MyAdapter extends FirestoreRecyclerAdapter<AdapterProductos, MyAdap
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull AdapterProductos articulo) {
 
-        holder.titulo.setText(articulo.getProducto());
+        holder.titulo.setText(articulo.getProducto() + " ("+articulo.getCantidad() + ")");
         holder.descripcion.setText(articulo.getDescripcion());
         Picasso.get().load(articulo.getUrl()).into(holder.profilePic);
         holder.tokenUsuario.setText(articulo.getTokenUsuario());
